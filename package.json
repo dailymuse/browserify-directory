@@ -1,0 +1,29 @@
+{
+  "name": "Directify",
+  "version": "0.1.0",
+  "description": "Directify allows you to watch a directory and output a browserified version of the directory",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dailymuse/directify.git"
+  },
+  "keywords": [
+    "browserify-tool",
+    "coffeeify"
+  ],
+  "author": "Shlomo Dalezman <sdalezman@gmail.com> (http://www.shon-elysees.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dailymuse/directify/issues"
+  },
+  "homepage": "https://github.com/dailymuse/directify",
+  "dependencies": {
+    "browserify": "^7.0.0",
+    "chokidar": "^0.12.1",
+    "coffeeify": "^1.0.0",
+    "mkdirp": "^0.5.0"
+  }
+}
