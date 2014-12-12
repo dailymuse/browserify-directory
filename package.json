@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Directify allows you to watch a directory and output a browserified version of the directory",
   "main": "index.js",
+  "bin": {
+    "directify": "bin/cmd.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +24,10 @@
   },
   "homepage": "https://github.com/dailymuse/directify",
   "dependencies": {
-    "browserify": "^7.0.0",
+    "browserify": "^6.1.0",
     "chokidar": "^0.12.1",
     "coffeeify": "^1.0.0",
-    "mkdirp": "^0.5.0"
+    "mkdirp": "^0.5.0",
+    "optimist": "^0.6.1"
   }
 }
