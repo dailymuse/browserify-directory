@@ -25,4 +25,4 @@ new directify({
     transform: argv.t || argv.transform || null,
     transformExtension: argv.e || argv.outputExtension || null,
     browserifyOpts: browserifyOpts
-}).run()
+})

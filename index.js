@@ -79,8 +79,8 @@ Directify.prototype._addPath = function(inputPath) {
     // sets the outputpath to write to 
     var outputPath = path.join(this.outputDir, path.relative(this.inputDir, inputPath));
     // if extension rewrite was set in opts replace extension
-    if(this.replaceExtension) {
-        outputPath = this.replaceExtension(outputPath, this.replaceExtension, '.js');
+    if(this.transformExtension) {
+        outputPath = this.replaceExtension(outputPath, this.transformExtension, '.js');
     }
 
     // used to create parent directories that don't exist
