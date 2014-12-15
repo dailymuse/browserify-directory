@@ -3,7 +3,6 @@ var path = require("path");
 var chokidar = require("chokidar");
 var mkdirp = require("mkdirp");
 var browserify = require("browserify");
-var coffeeify = require("coffeeify");
 
 module.exports = Directify;
 
@@ -52,7 +51,7 @@ Directify.prototype.run = function() {
         // only want to bundle files that have a browserify instance associated 
         // with it
         if(changePath in self.cache) {
-            self._bundleShare(changePath);
+            self.bundleShare(changePath);
         }
 
         // if the changed files is a dependency, loop over all the files 
@@ -62,7 +61,7 @@ Directify.prototype.run = function() {
             var deps = self.deps[changePath];
 
             for(var i=0; i < deps.length; i++) {
-                self._bundleShare(deps[i]);
+                self.bundleShare(deps[i]);
             }
         }
     });
@@ -110,6 +109,10 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
         outputPath: outputPath
     }
 
+    // function to be called to add transforms or any other modifications
+    // a person needs to take on a browserify instance
+    this.modifyBrowserify(this.cache[inputPath])
+
     // when a browserify dependency is detected
     b.on("dep", function(dep) {
         // turn the browserify dependency file into a relative path to match
@@ -135,7 +138,7 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
 
     // add coffeeify transform 
     // REPLACE WITH TRANSFORM FUNCTION
-    b.transform(coffeeify);
+    // b.transform(coffeeify);
 
     b.on("error", function(err) {
         console.log(err)
@@ -143,11 +146,16 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
 
     // Call on browserify initialization so that browserfication happens
     // on script execution
-    this._bundleShare(inputPath);
+    this.bundleShare(inputPath);
+}
+
+// function in order to modify a browserify instance 
+Directify.prototype.modifyBrowserify = function(cacheData) {
+    return null;
 }
 
 // get the inputs browserify bundle and write it to the outputPath
-Directify.prototype._bundleShare = function(inputPath) {
+Directify.prototype.bundleShare = function(inputPath) {
     // input object with associated browserify instance and outputPath
     input = this.cache[inputPath];
     
