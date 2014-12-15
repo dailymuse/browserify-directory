@@ -179,10 +179,15 @@ Directify.prototype.bundleShare = function(inputPath) {
     
     try {
         input.b.bundle()
+            .on("error", function(err){
+                console.log('error')
+                console.error(err.message)
+            })
             .pipe(fs.createWriteStream(input.outputPath));
 
         console.log('compiled ' + path.resolve(input.outputPath));
     } catch(error) {
+        console.log('error in bundle')
         console.error(error);
     }
 }
