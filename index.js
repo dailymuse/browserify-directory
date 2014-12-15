@@ -47,7 +47,10 @@ Directify.prototype._run = function() {
     // (tool should only browserify files in the input path)
     this.watcher.on("add", function(inputPath) {
         if(!(inputPath in self.deps)) {
-            self._addPath(inputPath);
+            // need to turn into relative path because browserify returns 
+            // absolute paths and in order to do path matching correctly 
+            // need to make paths relative for self.cache and self.deps
+            self._addPath(path.relative(self.curDir, inputPath));
         }
     });
 
@@ -56,6 +59,11 @@ Directify.prototype._run = function() {
     this.watcher.on("change", function(changePath) {
         // only want to bundle files that have a browserify instance associated 
         // with it
+
+        // need to turn into relative path because browserify returns 
+        // absolute paths and in order to do path matching correctly 
+        // need to make paths relative for self.cache and self.deps
+        changePath = path.relative(self.curDir, changePath);
         if(changePath in self.cache) {
             self.bundleShare(changePath);
         }
@@ -63,7 +71,6 @@ Directify.prototype._run = function() {
         // if the changed files is a dependency, loop over all the files 
         // that require said file and bundle the files
         if(changePath in self.deps) {
-
             var deps = self.deps[changePath];
 
             for(var i=0; i < deps.length; i++) {
@@ -150,10 +157,6 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
             }
         }
     });
-
-    // add coffeeify transform 
-    // REPLACE WITH TRANSFORM FUNCTION
-    // b.transform(coffeeify);
 
     b.on("error", function(err) {
         console.log(err)
