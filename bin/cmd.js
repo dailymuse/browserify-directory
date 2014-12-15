@@ -20,4 +20,4 @@ if(argv._.length < 2) {
 new directify({
     inputDir: argv._[0],
     outputDir: argv._[1]
-})
+}).run()

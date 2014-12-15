@@ -17,12 +17,11 @@ function Directify(options) {
 
     this.cache = {};
     this.deps = {};
-    this._run();
 }
 
 // sets up watching of directories and events that should be triggered when 
 // watcher events occur
-Directify.prototype._run = function() {
+Directify.prototype.run = function() {
     var self = this;
 
     if (!this.inputDir || !this.outputDir) {
@@ -59,6 +58,7 @@ Directify.prototype._run = function() {
         // if the changed files is a dependency, loop over all the files 
         // that require said file and bundle the files
         if(changePath in self.deps) {
+
             var deps = self.deps[changePath];
 
             for(var i=0; i < deps.length; i++) {
@@ -102,6 +102,7 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
     // create browserify instance based on absolute path of input file
     var b = browserify(path.resolve(inputPath));
 
+
     // add input path to this.cache for easy tracking of the inputPaths 
     // browserify instance and the outputpath associated with it
     this.cache[inputPath] = {
@@ -120,12 +121,13 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
             self.watcher.add(depFile);
         }
 
-        // if the dependency file doesn't equal the inputPath 
+        // if the dependency file doesn't equal the inputPath and isn't 
+        // already mapped to the input Path
         if (depFile !== inputPath) {
-            if (depFile in self.deps) {
+            
+            if (depFile in self.deps && self.deps[depFile].indexOf(inputPath) < 0) {
                 self.deps[depFile].push(inputPath);
-            } else {
-                
+            } else if (!(depFile in self.deps)) {
                 self.deps[depFile] = [inputPath]
             }
         }
