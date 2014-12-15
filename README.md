@@ -2,7 +2,7 @@
 Directify allows you to pass in an input directory and output directory and will browserify bundle all the files in the input directory on file change to the output directory.   Directify also watches dependencies that are outside of the input directory and will bundle the inputs files on dependency changes.
 
 ##Inspiration
-We found [watchify](https://github.com/substack/watchify) to be useful for when you need to output a single file, but not when you have many javascript files that need to be browserified into individual files. Not all pages are single page SPA's.
+We found [watchify](https://github.com/substack/watchify) to be useful for when you need to output a single file, but not when you have many javascript files that need to be browserified into individual files - because not all pages are single page SPA's.
 
 ## Install
 `npm install directify`
