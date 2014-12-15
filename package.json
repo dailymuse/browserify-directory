@@ -14,8 +14,12 @@
     "url": "https://github.com/dailymuse/directify.git"
   },
   "keywords": [
+    "browserify"
     "browserify-tool",
-    "coffeeify"
+    "watch",
+    "bundle",
+    "build",
+    "browser"
   ],
   "author": "Shlomo Dalezman <sdalezman@gmail.com> (http://www.shon-elysees.com/)",
   "license": "ISC",

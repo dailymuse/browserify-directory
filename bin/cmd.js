@@ -1,11 +1,12 @@
 var directify = require("../");
 
 // options unique to directify and not passed into browserify
-DIRECTIFY_OPTS = ['_', 'o', 'output', 't', 'transform', 'e', 'outputExt']
+DIRECTIFY_OPTS = ['_', 't', 'transform', 'e', 'outputExt'];
 
 var argv = require("minimist")(process.argv.slice(2));
 
-if(argv._.length < 1 || (argv.o && argv.o.length < 1)) {
+// exit if input and output directory arguments aren't included
+if(argv._.length < 2) {
     console.error("Input and output file/directory arguments required");
     process.exit(-1);
 }
@@ -14,13 +15,13 @@ if(argv._.length < 1 || (argv.o && argv.o.length < 1)) {
 var browserifyOpts = {};
 for (key in argv) {
     if (DIRECTIFY_OPTS.indexOf(key) < 0) {
-        browserifyOpts[key] = argv[key]
+        browserifyOpts[key] = argv[key];
     }
 }
 
 new directify({
     inputDir: argv._[0],
-    outputDir: argv.o,
+    outputDir: argv._[1],
     transform: argv.t || argv.transform || null,
     transformExtension: argv.e || argv.outputExtension || null,
     browserifyOpts: browserifyOpts
