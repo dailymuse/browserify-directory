@@ -1,22 +1,18 @@
 # Directify
-Directify allows you to pass in an input directory and output directory and will browserify bundle all the files in the input directory on file change to the output directory.   Directify also watches dependencies that are outside of the input directory and will bundle the inputs files on dependency changes.
+Directify watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. 
 
 ##Inspiration
-We found [watchify](https://github.com/substack/watchify) to be useful for when you need to output a single file, but not when you have many javascript files that need to be browserified into individual files - because not all pages are single page SPA's.
+We found [watchify](https://github.com/substack/watchify) to be useful for when you need to output a single file, but not when you have many javascript files that need to be browserified.
 
 ## Install
 `npm install directify`
 
 ## Usage
-Directify can be used either from the command line or via the API. (NOTE: If you need to use more than one transform that affects file extensions you will need to build off the API or run multiple Directify instances.)
+Directify can be used either from the command line or via its API. 
 
 ### Command Line
 ```
-Usage: directify [entry directory] opts
-
-    --outfile,  -o      Write browserify bundles to this output directory.
-                        Will match directory structure of input directory.
-                        *This argument is required.
+Usage: directify [input directory] [output directory] opts
                     
    --transform, -t      Transform to apply to output files. 
                         Directify assumes that the transform can be requied.
@@ -27,7 +23,6 @@ Usage: directify [entry directory] opts
 ```
 You can also include any browserify options that will be passed to the browserify instance. Options should be passed as the camelcase name corresponding to [options name](https://github.com/substack/node-browserify#user-content-methods) in the browserify method . 
 
-NOTE: Directify has not been tested with all options and therefore should be used with discretion. 
 Directify does not support the `-e entry point` browserify option. 
 
 ### API
