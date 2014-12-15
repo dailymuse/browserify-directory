@@ -26,8 +26,7 @@
   "dependencies": {
     "browserify": "^6.1.0",
     "chokidar": "^0.12.1",
-    "coffeeify": "^1.0.0",
-    "mkdirp": "^0.5.0",
-    "optimist": "^0.6.1"
+    "minimist": "^1.1.0",
+    "mkdirp": "^0.5.0"
   }
 }

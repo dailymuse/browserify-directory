@@ -1,23 +1,27 @@
 var directify = require("../");
 
-var argv = require("optimist")
-    .usage("Loops over a directory and Watchify's all files in that directory")
+// options unique to directify and not passed into browserify
+DIRECTIFY_OPTS = ['_', 'o', 'output', 't', 'transform', 'e', 'outputExt']
 
-    .options("w", {
-        alias: "watch",
-        describe: "Watch the input file/directory and bind watchify to that directory"
-    })
+var argv = require("minimist")(process.argv.slice(2));
 
-    .boolean(["w"])
-
-    .argv;
-
-if(argv._.length < 2) {
+if(argv._.length < 1 || (argv.o && argv.o.length < 1)) {
     console.error("Input and output file/directory arguments required");
     process.exit(-1);
 }
 
+// set browserify opts for browserify instance in directify
+var browserifyOpts = {};
+for (key in argv) {
+    if (DIRECTIFY_OPTS.indexOf(key) < 0) {
+        browserifyOpts[key] = argv[key]
+    }
+}
+
 new directify({
     inputDir: argv._[0],
-    outputDir: argv._[1]
+    outputDir: argv.o,
+    transform: argv.t || argv.transform || null,
+    transformExtension: argv.e || argv.outputExtension || null,
+    browserifyOpts: browserifyOpts
 }).run()

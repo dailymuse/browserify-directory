@@ -3,6 +3,7 @@ var path = require("path");
 var chokidar = require("chokidar");
 var mkdirp = require("mkdirp");
 var browserify = require("browserify");
+var cofeeify = require("coffeeify");
 
 module.exports = Directify;
 
@@ -11,16 +12,21 @@ function Directify(options) {
 
     this.inputDir = options.inputDir;
     this.outputDir = options.outputDir;
+    this.transform = options.transform || null;
+    this.transformExtension = options.transformExtension || null;
+    this.browserifyOpts = options.browserifyOpts || {};
 
     this.curDir = __dirname;
 
     this.cache = {};
     this.deps = {};
+
+    this._run()
 }
 
 // sets up watching of directories and events that should be triggered when 
 // watcher events occur
-Directify.prototype.run = function() {
+Directify.prototype._run = function() {
     var self = this;
 
     if (!this.inputDir || !this.outputDir) {
@@ -70,8 +76,12 @@ Directify.prototype.run = function() {
 Directify.prototype._addPath = function(inputPath) {
     var self = this;
 
-    // sets the outputpath to write to and replaces the extension for coffeescript
-    var outputPath = this._replaceExtension(path.join(this.outputDir, path.relative(this.inputDir, inputPath)), ".coffee", ".js");
+    // sets the outputpath to write to 
+    var outputPath = path.join(this.outputDir, path.relative(this.inputDir, inputPath));
+    // if extension rewrite was set in opts replace extension
+    if(this.replaceExtension) {
+        outputPath = this.replaceExtension(outputPath, this.replaceExtension, '.js');
+    }
 
     // used to create parent directories that don't exist
     var parentDirectoryPath = path.join(outputPath, "..");
@@ -86,8 +96,8 @@ Directify.prototype._addPath = function(inputPath) {
     });
 }
 
-// used internally to replace extension - should be configured for transforms
-Directify.prototype._replaceExtension = function(filepath, expectedExtension, newExtension) {
+// convenience method to replace extension - should be configured for transforms
+Directify.prototype.replaceExtension = function(filepath, expectedExtension, newExtension) {
     var dirpath = path.dirname(filepath);
     var filename = path.basename(filepath, expectedExtension) + newExtension;
     return path.join(dirpath, filename);
@@ -99,14 +109,19 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
     var self = this;
 
     // create browserify instance based on absolute path of input file
-    var b = browserify(path.resolve(inputPath));
-
+    var b = browserify(path.resolve(inputPath), this.browserifyOpts);
 
     // add input path to this.cache for easy tracking of the inputPaths 
     // browserify instance and the outputpath associated with it
     this.cache[inputPath] = {
         b: b,
-        outputPath: outputPath
+        outputPath: outputPath,
+        inputPath: inputPath
+    }
+
+    // apply browserify transform
+    if(this.transform) {
+        b.transform(require(this.transform));
     }
 
     // function to be called to add transforms or any other modifications
