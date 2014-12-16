@@ -3,7 +3,6 @@ var path = require("path");
 var chokidar = require("chokidar");
 var mkdirp = require("mkdirp");
 var browserify = require("browserify");
-var cofeeify = require("coffeeify");
 
 module.exports = Directify;
 
@@ -128,7 +127,7 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
 
     // apply browserify transform
     if(this.transform) {
-        b.transform(require(this.transform));
+        b.transform(this.transform);
     }
 
     // function to be called to add transforms or any other modifications

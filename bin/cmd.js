@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var directify = require("../");
 
 // options unique to directify and not passed into browserify
@@ -18,6 +20,8 @@ for (key in argv) {
         browserifyOpts[key] = argv[key];
     }
 }
+
+console.log(typeof argv.t)
 
 new directify({
     inputDir: argv._[0],
