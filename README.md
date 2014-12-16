@@ -1,8 +1,5 @@
 # Directify
-Directify watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. 
-
-##Inspiration
-We found [watchify](https://github.com/substack/watchify) to be useful for when you need to output a single file, but not when you have many javascript files that need to be browserified.
+Directify watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. Think of directify as super charged [watchify](https://github.com/substack/watchify) - instead of watching files it watches an entire directory for changes.  
 
 ## Install
 `npm install directify`

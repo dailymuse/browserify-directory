@@ -6,9 +6,6 @@
   "bin": {
     "directify": "bin/cmd.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dailymuse/directify.git"
@@ -21,8 +18,8 @@
     "build",
     "browser"
   ],
-  "author": "Shlomo Dalezman <sdalezman@gmail.com> (http://www.shon-elysees.com/)",
-  "license": "ISC",
+  "author": "The Muse <shlomo@themuse.com> (https://www.themuse.com/)",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/dailymuse/directify/issues"
   },
