@@ -1,5 +1,5 @@
 # Directify
-Directify watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. Think of directify as super charged [watchify](https://github.com/substack/watchify) - instead of watching files it watches an entire directory for changes.  
+Directify watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. Think of directify as super charged [watchify](https://github.com/substack/watchify) - instead of watching files it watches an entire directory for changes and outputs those changed files while mirroring the input directory hierarchy in the output directory.  
 
 ## Install
 `npm install directify`
@@ -16,7 +16,7 @@ Usage: directify [input directory] [output directory] opts
                         
    --outputExt, -e      File extension that a transform should replace the inputPath 
                         extension with a .js extension (e.g. replacing .coffee if 
-                        you are using the coffeeify transform ).
+                        you are using the coffeeify transform).
 ```
 You can also include any browserify options that will be passed to the browserify instance. Options should be passed as the camelcase name corresponding to [options name](https://github.com/substack/node-browserify#user-content-methods) in the browserify method . 
 

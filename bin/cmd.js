@@ -21,8 +21,6 @@ for (key in argv) {
     }
 }
 
-console.log(typeof argv.t)
-
 new directify({
     inputDir: argv._[0],
     outputDir: argv._[1],

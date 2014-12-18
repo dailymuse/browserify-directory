@@ -158,7 +158,7 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
     });
 
     b.on("error", function(err) {
-        console.log(err)
+        console.error("browserify error: " + err)
     });
 
     // Call on browserify initialization so that browserfication happens
