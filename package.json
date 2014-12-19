@@ -4,7 +4,7 @@
   "description": "Directify allows you to watch a directory and output a browserified version of the directory",
   "main": "index.js",
   "bin": {
-    "directify": "bin/cmd.js"
+    "browserify-directory": "bin/cmd.js"
   },
   "repository": {
     "type": "git",

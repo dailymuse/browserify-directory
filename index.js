@@ -4,9 +4,9 @@ var chokidar = require("chokidar");
 var mkdirp = require("mkdirp");
 var browserify = require("browserify");
 
-module.exports = Directify;
+module.exports = BrowserifyDirectory;
 
-function Directify(options) {
+function BrowserifyDirectory(options) {
     options = options || {};
 
     this.inputDir = options.inputDir;
@@ -25,7 +25,7 @@ function Directify(options) {
 
 // sets up watching of directories and events that should be triggered when 
 // watcher events occur
-Directify.prototype._run = function() {
+BrowserifyDirectory.prototype._run = function() {
     var self = this;
 
     if (!this.inputDir || !this.outputDir) {
@@ -79,7 +79,7 @@ Directify.prototype._run = function() {
     });
 }
 
-Directify.prototype._addPath = function(inputPath) {
+BrowserifyDirectory.prototype._addPath = function(inputPath) {
     var self = this;
 
     // sets the outputpath to write to 
@@ -103,7 +103,7 @@ Directify.prototype._addPath = function(inputPath) {
 }
 
 // convenience method to replace extension - should be configured for transforms
-Directify.prototype.replaceExtension = function(filepath, expectedExtension, newExtension) {
+BrowserifyDirectory.prototype.replaceExtension = function(filepath, expectedExtension, newExtension) {
     var dirpath = path.dirname(filepath);
     var filename = path.basename(filepath, expectedExtension) + newExtension;
     return path.join(dirpath, filename);
@@ -111,7 +111,7 @@ Directify.prototype.replaceExtension = function(filepath, expectedExtension, new
 
 // creates a browserify instance for an inputFile and binds necessary browserify
 // events 
-Directify.prototype._browserifyFile = function(inputPath, outputPath) {
+BrowserifyDirectory.prototype._browserifyFile = function(inputPath, outputPath) {
     var self = this;
 
     // create browserify instance based on absolute path of input file
@@ -167,12 +167,12 @@ Directify.prototype._browserifyFile = function(inputPath, outputPath) {
 }
 
 // function in order to modify a browserify instance 
-Directify.prototype.modifyBrowserify = function(cacheData) {
+BrowserifyDirectory.prototype.modifyBrowserify = function(cacheData) {
     return null;
 }
 
 // get the inputs browserify bundle and write it to the outputPath
-Directify.prototype.bundleShare = function(inputPath) {
+BrowserifyDirectory.prototype.bundleShare = function(inputPath) {
     // input object with associated browserify instance and outputPath
     input = this.cache[inputPath];
     

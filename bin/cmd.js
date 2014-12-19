@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var directify = require("../");
+var browserifyDirectory = require("../");
 
-// options unique to directify and not passed into browserify
-DIRECTIFY_OPTS = ['_', 't', 'transform', 'e', 'outputExt'];
+// options unique to browserifyDirectory and not passed into browserify
+BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt'];
 
 var argv = require("minimist")(process.argv.slice(2));
 
@@ -13,15 +13,15 @@ if(argv._.length < 2) {
     process.exit(-1);
 }
 
-// set browserify opts for browserify instance in directify
+// set browserify opts for browserify instance in browserify-directory
 var browserifyOpts = {};
 for (key in argv) {
-    if (DIRECTIFY_OPTS.indexOf(key) < 0) {
+    if (BROWSERIFYDIRECTORY_OPTS.indexOf(key) < 0) {
         browserifyOpts[key] = argv[key];
     }
 }
 
-new directify({
+new browserifyDirectory({
     inputDir: argv._[0],
     outputDir: argv._[1],
     transform: argv.t || argv.transform || null,
