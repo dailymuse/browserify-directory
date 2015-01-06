@@ -1,14 +1,14 @@
 {
-  "name": "Directify",
-  "version": "0.1.0",
-  "description": "Directify allows you to watch a directory and output a browserified version of the directory",
+  "name": "BrowserifyDirectory",
+  "version": "1.0.0",
+  "description": "Browserify-directory allows you to watch a directory and browserifies each file in the input directory to the output directory",
   "main": "index.js",
   "bin": {
     "browserify-directory": "bin/cmd.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dailymuse/directify.git"
+    "url": "https://github.com/dailymuse/browserify-directory.git"
   },
   "keywords": [
     "browserify",
@@ -16,14 +16,15 @@
     "watch",
     "bundle",
     "build",
-    "browser"
+    "browser",
+    "directory"
   ],
   "author": "The Muse <shlomo@themuse.com> (https://www.themuse.com/)",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/dailymuse/directify/issues"
+    "url": "https://github.com/dailymuse/browserify-directory/issues"
   },
-  "homepage": "https://github.com/dailymuse/directify",
+  "homepage": "https://github.com/dailymuse/browserify-directory",
   "dependencies": {
     "browserify": "^6.1.0",
     "chokidar": "^0.12.1",
