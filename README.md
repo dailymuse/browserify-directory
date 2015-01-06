@@ -2,7 +2,8 @@
 Browserify-directory watches all files in a directory and browserify's them to an output directory. Update any source files and your browserify bundle will be updated on the spot. Think of browserify-directory as super charged [watchify](https://github.com/substack/watchify) - instead of watching files it watches an entire directory for changes and outputs those changed files, while mirroring the input directory hierarchy in the output directory.  
 
 ## Install
-`npm install browserify-directory`
+If you are using browserify directory as a cli tool:
+`npm install browserify-directory -g`
 
 ## Usage
 Browserify-directory can be used either from the command line or via its API. 
