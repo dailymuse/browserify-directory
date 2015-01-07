@@ -3,6 +3,7 @@ Browserify-directory watches all files in a directory and browserify's them to a
 
 ## Install
 If you are using browserify directory as a cli tool:
+
 `npm install browserify-directory -g`
 
 ## Usage
