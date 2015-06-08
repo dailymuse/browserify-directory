@@ -125,9 +125,9 @@ BrowserifyDirectory.prototype._browserifyFile = function(inputPath, outputPath) 
         inputPath: inputPath
     }
 
-    // apply browserify transform
-    if(this.transform) {
-        b.transform(this.transform);
+    for (var i = 0; i < this.transform.length; i++ ) {
+        // apply browserify transform
+        b.transform(this.transform[i]);
     }
 
     // function to be called to add transforms or any other modifications
