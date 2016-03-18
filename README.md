@@ -19,6 +19,8 @@ Usage: browserify-directory [input directory] [output directory] opts
    --outputExt, -e      File extension that a transform should replace the inputPath 
                         extension with a .js extension (e.g. replacing .coffee if 
                         you are using the coffeeify transform).
+
+   --usePolling, -p     Set to true if you are watching an NFS share: -p true
 ```
 You can also include any browserify options that will be passed to the browserify instance. Options should be passed as the camelcase name corresponding to [options name](https://github.com/substack/node-browserify#user-content-methods) in the browserify method . 
 
