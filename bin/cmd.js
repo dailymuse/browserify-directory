@@ -6,7 +6,7 @@ var browserifyDirectory = require("../"),
     transform;
 
 // options unique to browserifyDirectory and not passed into browserify
-BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt'];
+BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt', 'p', 'usePolling'];
 
 argv = require("minimist")(process.argv.slice(2));
 
@@ -33,6 +33,7 @@ new browserifyDirectory({
     inputDir: argv._[0],
     outputDir: argv._[1],
     transform: transform,
+    usePolling: argv.p || argv.usePolling || null,
     transformExtension: argv.e || argv.outputExtension || null,
     browserifyOpts: browserifyOpts
 })
