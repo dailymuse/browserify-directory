@@ -11,6 +11,7 @@ function BrowserifyDirectory(options) {
 
     this.inputDir = options.inputDir;
     this.outputDir = options.outputDir;
+    this.usePolling = options.usePolling || false;
     this.transform = options.transform || null;
     this.transformExtension = options.transformExtension || null;
     this.browserifyOpts = options.browserifyOpts || {};
@@ -39,7 +40,7 @@ BrowserifyDirectory.prototype._run = function() {
     }
 
     // ensure watcher ignores .DS_Store files
-    this.watcher = chokidar.watch(this.inputDir, { ignored: /\.DS_Store/ });
+    this.watcher = chokidar.watch(this.inputDir, { usePolling: this.usePolling, ignored: /\.DS_Store/ });
 
     // when a file is watched need to take initial action in order to browserify
     // the file correctly. Ensures the file is not a dependent file 
