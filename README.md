@@ -21,6 +21,10 @@ Usage: browserify-directory [input directory] [output directory] opts
                         you are using the coffeeify transform).
 
    --usePolling, -p     Set to true if you are watching an NFS share: -p true
+
+   --excludeExt, -z     File extension which should not be compiled. Use this when
+                        you only want to apply certain transforms to certain
+                        filetypes. Add multiple options to exclude multiple extensions.
 ```
 You can also include any browserify options that will be passed to the browserify instance. Options should be passed as the camelcase name corresponding to [options name](https://github.com/substack/node-browserify#user-content-methods) in the browserify method . 
 
