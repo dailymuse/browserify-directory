@@ -12,8 +12,10 @@ function BrowserifyDirectory(options) {
     this.inputDir = options.inputDir;
     this.outputDir = options.outputDir;
     this.usePolling = options.usePolling || false;
+
     this.transform = options.transform || null;
     this.transformExtension = options.transformExtension || null;
+    this.excludeExtensions = options.excludeExtensions || [];
     this.browserifyOpts = options.browserifyOpts || {};
 
     this.curDir = __dirname;
@@ -46,7 +48,7 @@ BrowserifyDirectory.prototype._run = function() {
     // the file correctly. Ensures the file is not a dependent file 
     // (tool should only browserify files in the input path)
     this.watcher.on("add", function(inputPath) {
-        if(!(inputPath in self.deps)) {
+        if(!(inputPath in self.deps) && self.excludeExtensions.indexOf(path.extname(inputPath)) == -1) {
             // need to turn into relative path because browserify returns 
             // absolute paths and in order to do path matching correctly 
             // need to make paths relative for self.cache and self.deps

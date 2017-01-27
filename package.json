@@ -1,6 +1,6 @@
 {
   "name": "browserify-directory",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Browserify-directory allows you to watch a directory and browserifies each file in the input directory to the output directory",
   "main": "index.js",
   "bin": {

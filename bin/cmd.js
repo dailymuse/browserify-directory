@@ -6,7 +6,7 @@ var browserifyDirectory = require("../"),
     transform;
 
 // options unique to browserifyDirectory and not passed into browserify
-BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt', 'p', 'usePolling'];
+BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt', 'p', 'usePolling', 'excludeExt', 'z'];
 
 argv = require("minimist")(process.argv.slice(2));
 
@@ -29,11 +29,18 @@ if (typeof argv.t === "string" || typeof argv.transform === "string") {
     transform = argv.t || argv.transform || [];
 }
 
+if (typeof argv.z === "string" || typeof argv.excludeExt === "string") {
+    excludeExtensions = [argv.z || argv.excludeExt];
+} else {
+    excludeExtensions = argv.z || argv.excludeExt || [];
+}
+
 new browserifyDirectory({
     inputDir: argv._[0],
     outputDir: argv._[1],
     transform: transform,
     usePolling: argv.p || argv.usePolling || null,
     transformExtension: argv.e || argv.outputExtension || null,
+    excludeExtensions: excludeExtensions,
     browserifyOpts: browserifyOpts
 })
