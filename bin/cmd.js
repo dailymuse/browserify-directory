@@ -24,7 +24,7 @@ for (key in argv) {
 }
 
 if (typeof argv.t === "string" || typeof argv.transform === "string") {
-    transform = [argv.t];
+    transform = [argv.t || argv.transform];
 } else {
     transform = argv.t || argv.transform || [];
 }
