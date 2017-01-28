@@ -5,6 +5,16 @@ var browserifyDirectory = require("../"),
     browserifyOpts = {},
     transform;
 
+function coalesceArgs(argv, argShortName, argFullName) {
+    shortVal = argv[argShortName];
+    longVal = argv[argFullName];
+    if (typeof shortVal === "string" || typeof longVal === "string") {
+        return [shortVal || longVal];
+    } else {
+        return  shortVal || longVal || [];
+    }
+}
+
 // options unique to browserifyDirectory and not passed into browserify
 BROWSERIFYDIRECTORY_OPTS = ['_', 't', 'transform', 'e', 'outputExt', 'p', 'usePolling', 'excludeExt', 'z'];
 
@@ -23,17 +33,8 @@ for (key in argv) {
     }
 }
 
-if (typeof argv.t === "string" || typeof argv.transform === "string") {
-    transform = [argv.t || argv.transform];
-} else {
-    transform = argv.t || argv.transform || [];
-}
-
-if (typeof argv.z === "string" || typeof argv.excludeExt === "string") {
-    excludeExtensions = [argv.z || argv.excludeExt];
-} else {
-    excludeExtensions = argv.z || argv.excludeExt || [];
-}
+transform = coalesceArgs(argv, "t", "transform")
+excludeExtensions = coalesceArgs(argv, "z", "excludeExt")
 
 new browserifyDirectory({
     inputDir: argv._[0],
