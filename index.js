@@ -26,7 +26,7 @@ function BrowserifyDirectory(options) {
     this._run()
 }
 
-// sets up watching of directories and events that should be triggered when 
+// sets up watching of directories and events that should be triggered when
 // watcher events occur
 BrowserifyDirectory.prototype._run = function() {
     var self = this;
@@ -45,32 +45,32 @@ BrowserifyDirectory.prototype._run = function() {
     this.watcher = chokidar.watch(this.inputDir, { usePolling: this.usePolling, ignored: /\.DS_Store/ });
 
     // when a file is watched need to take initial action in order to browserify
-    // the file correctly. Ensures the file is not a dependent file 
+    // the file correctly. Ensures the file is not a dependent file
     // (tool should only browserify files in the input path)
-    this.watcher.on("add", function(inputPath) {
-        if(!(inputPath in self.deps) && self.excludeExtensions.indexOf(path.extname(inputPath)) == -1) {
-            // need to turn into relative path because browserify returns 
-            // absolute paths and in order to do path matching correctly 
-            // need to make paths relative for self.cache and self.deps
-            self._addPath(path.relative(self.curDir, inputPath));
-        }
-    });
+  this.watcher.on("add", function(inputPath) {
+      if(!(inputPath in self.deps) && self.excludeExtensions.indexOf(path.extname(inputPath)) === -1) {
+          // need to turn into relative path because browserify returns
+          // absolute paths and in order to do path matching correctly
+          // need to make paths relative for self.cache and self.deps
+          self._addPath(path.relative(self.curDir, inputPath));
+      }
+  });
 
     // watch for changes on files that are being watched - this includes all
     // dependency filess
     this.watcher.on("change", function(changePath) {
-        // only want to bundle files that have a browserify instance associated 
+        // only want to bundle files that have a browserify instance associated
         // with it
 
-        // need to turn into relative path because browserify returns 
-        // absolute paths and in order to do path matching correctly 
+        // need to turn into relative path because browserify returns
+        // absolute paths and in order to do path matching correctly
         // need to make paths relative for self.cache and self.deps
         changePath = path.relative(self.curDir, changePath);
         if(changePath in self.cache) {
             self.bundleShare(changePath);
         }
 
-        // if the changed files is a dependency, loop over all the files 
+        // if the changed files is a dependency, loop over all the files
         // that require said file and bundle the files
         if(changePath in self.deps) {
             var deps = self.deps[changePath];
@@ -85,8 +85,9 @@ BrowserifyDirectory.prototype._run = function() {
 BrowserifyDirectory.prototype._addPath = function(inputPath) {
     var self = this;
 
-    // sets the outputpath to write to 
-    var outputPath = path.join(this.outputDir, path.relative(this.inputDir, inputPath));
+    // sets the outputpath to write to
+    inputPath = path.relative(".", path.join(this.inputDir, path.basename(inputPath)));
+    var outputPath = path.join(this.outputDir, path.basename(inputPath));
     // if extension rewrite was set in opts replace extension
     if(this.transformExtension) {
         outputPath = this.replaceExtension(outputPath, this.transformExtension, '.js');
@@ -99,7 +100,7 @@ BrowserifyDirectory.prototype._addPath = function(inputPath) {
         if(err) {
             console.error("Could not create parent directory `" + parentDirectoryPath + "`:", err);
             return;
-        }   
+        }
 
         self._browserifyFile(inputPath, outputPath);
     });
@@ -113,14 +114,14 @@ BrowserifyDirectory.prototype.replaceExtension = function(filepath, expectedExte
 }
 
 // creates a browserify instance for an inputFile and binds necessary browserify
-// events 
+// events
 BrowserifyDirectory.prototype._browserifyFile = function(inputPath, outputPath) {
     var self = this;
 
     // create browserify instance based on absolute path of input file
     var b = browserify(path.resolve(inputPath), this.browserifyOpts);
 
-    // add input path to this.cache for easy tracking of the inputPaths 
+    // add input path to this.cache for easy tracking of the inputPaths
     // browserify instance and the outputpath associated with it
     this.cache[inputPath] = {
         b: b,
@@ -142,16 +143,16 @@ BrowserifyDirectory.prototype._browserifyFile = function(inputPath, outputPath) 
         // turn the browserify dependency file into a relative path to match
         // the file path structure of inputPath
         var depFile = path.relative(self.curDir, dep.file);
-        
+
         // watch file when file isn't in self.deps and not in self.cache
         if (!(depFile in self.deps) && !(depFile in self.cache)) {
             self.watcher.add(depFile);
         }
 
-        // if the dependency file doesn't equal the inputPath and isn't 
+        // if the dependency file doesn't equal the inputPath and isn't
         // already mapped to the input Path
         if (depFile !== inputPath) {
-            
+
             if (depFile in self.deps && self.deps[depFile].indexOf(inputPath) < 0) {
                 self.deps[depFile].push(inputPath);
             } else if (!(depFile in self.deps)) {
@@ -169,7 +170,7 @@ BrowserifyDirectory.prototype._browserifyFile = function(inputPath, outputPath) 
     this.bundleShare(inputPath);
 }
 
-// function in order to modify a browserify instance 
+// function in order to modify a browserify instance
 BrowserifyDirectory.prototype.modifyBrowserify = function(cacheData) {
     return null;
 }
@@ -178,9 +179,9 @@ BrowserifyDirectory.prototype.modifyBrowserify = function(cacheData) {
 BrowserifyDirectory.prototype.bundleShare = function(inputPath) {
     // input object with associated browserify instance and outputPath
     input = this.cache[inputPath];
-    
+
     try {
-        // grab bundle errors so that it can 
+        // grab bundle errors so that it can
         input.b.bundle()
             .on("error", function(err){
                 console.error(err.message)
@@ -192,5 +193,3 @@ BrowserifyDirectory.prototype.bundleShare = function(inputPath) {
         console.error(error);
     }
 }
-
-
